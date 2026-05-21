@@ -16,16 +16,15 @@ dp = Dispatcher()
 user_scores = {}
 
 QUESTIONS = [
-    {"text": "1. Компьютерде код жазу немесе бағдарламаларды зерттеу ұнай ma?", "img": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=500"},
+    {"text": "1. Компьютерде код жазу немесе бағдарламаларды зерттеу ұнай ма?", "img": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=500"},
     {"text": "2. Адамдармен тез тіл табысып, олардың психологиясын түсінген қызық па?", "img": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=500"},
     {"text": "3. Сурет салу, дизайн жасау немесе бейнебаян өңдеумен айналысқың келе ме?", "img": "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=500"},
-    {"text": "4. Математикалық есептер шығару және логикалық жұмбақтар шешу оңай ma?", "img": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=500"},
+    {"text": "4. Математикалық есептер шығару және логикалық жұмбақтар шешу оңай ма?", "img": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=500"},
     {"text": "5. Жасанды интеллект, роботтар және жаңа технологиялар әлемі қызықтыра ма?", "img": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=500"}
 ]
 
-# Render тексеруі үшін кішкентай веб-бет
 async def handle(request):
-    return web.Response(text="Bot is running completely free!")
+    return web.Response(text="Bot is running completely free on Render!")
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
@@ -65,11 +64,9 @@ async def process_answer(callback: types.CallbackQuery):
         await callback.message.answer(f"🏁 Тест бітті!\n\nСіздің бағытыңыз: {res}")
 
 async def main():
-    # Ботты артқы фонда іске қосу
     await bot.delete_webhook(drop_pending_updates=True)
     asyncio.create_task(dp.start_polling(bot))
     
-    # Render талап ететін веб-сайт бөлігі
     app = web.Application()
     app.router.add_get('/', handle)
     port = int(os.environ.get("PORT", 10000))
@@ -78,7 +75,6 @@ async def main():
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
     
-    # Сервердің тоқтап қалмауы үшін шексіз цикл
     while True:
         await asyncio.sleep(3600)
 
